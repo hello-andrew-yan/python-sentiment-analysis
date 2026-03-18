@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project]
+name = "sentiment_analysis"
+version = "1.0.0"
+requires-python = ">=3.12, <3.14"
+authors = [{ name = "Andrew", email = "hello.andrew.yan@outlook.com" }]
+
+dependencies = [
+  # Core packages
+  "torch",
+  "sentence-transformers==5.3.0",
+  "pandas==3.0.1",
+  "polars==1.39.0",
+
+  # Experiments with dimension-reduction techniques
+  "scikit-learn==1.8.0",
+  "umap-learn==0.5.11",
+
+  # Experiments with scalable similarity searching
+  "faiss-cpu==1.13.2", # Switch to CUDA supported FAISS if available
+
+  # For better formatted debugs
+  "rich==14.3.3",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
