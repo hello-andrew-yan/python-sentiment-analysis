@@ -4,7 +4,7 @@ import polars as pl
 from tqdm import tqdm
 
 from sentiment_analysis.core.filter import Filter
-from sentiment_analysis.extension.commit import Length
+from sentiment_analysis.extension.commit import Length, Matches
 
 
 def apply_masks(
@@ -29,10 +29,9 @@ if __name__ == "__main__":
     csv_dir.mkdir(parents=True, exist_ok=True)
 
     csv_path = csv_dir / "dhruvildave_github-commit-messages-dataset.csv"
-    target_col = "message"
     filters: list[Filter] = [
-        Length(target_col, 0, 9),
-        Length(target_col, 10, 72),
+        Matches("message", pattern=r"^\w+(\([^)]*\))?:\s*.+")
+        & Length("message", 10, 72),
     ]
 
-    apply_masks(csv_path, output_dir=csv_dir, filters=filters, export_cols=target_col)
+    apply_masks(csv_path, output_dir=csv_dir, filters=filters, export_cols="message")

@@ -15,10 +15,10 @@ class Length(Filter):
         )
 
 
-class Contains(Filter):
-    def __init__(self, column: str, word: str):
+class Matches(Filter):
+    def __init__(self, column: str, pattern: str):
         self.column = column
-        self.word = word
+        self.pattern = pattern
 
-    def __call__(self):
-        return pl.col(self.column).str.contains(self.word, literal=True, strict=False)
+    def __call__(self) -> pl.Expr:
+        return pl.col(self.column).str.contains(self.pattern, literal=False)

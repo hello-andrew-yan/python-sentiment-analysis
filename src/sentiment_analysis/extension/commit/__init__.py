@@ -1,3 +1,3 @@
-from .filters import Contains, Length
+from .filters import Length, Matches
 
-__all__ = ["Contains", "Length"]
+__all__ = ["Length", "Matches"]
